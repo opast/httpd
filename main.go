@@ -137,5 +137,4 @@ func main() {
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 
 	http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", nil)
-
 }
