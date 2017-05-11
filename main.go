@@ -1,4 +1,4 @@
-package main
+package mhttpd
 
 import (
 	"html/template"
