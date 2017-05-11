@@ -3,8 +3,16 @@ Description=Web server demon
 After=network.target
 
 [Service]
-PIDFile=/run/mhttpd.pid
-ExecStart=/opt/mhttpd
+Type=simple
+
+User=root
+Group=root
+
+WorkingDirectory=/opt/mhttpd
+
+Restart=on-failure
+
+ExecStart=/opt/mhttpd/mhttpd
 
 
 [Install]
