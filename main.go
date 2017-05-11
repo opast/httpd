@@ -45,7 +45,9 @@ func do(w http.ResponseWriter, req *http.Request) {
 
 		fmt.Println(hostname, ipaddress)
 
-		out, _ := exec.Command("ls", "-l").Output()
+		arg := "-l"
+
+		out, _ := exec.Command("ls", arg).Output()
 
 		fmt.Printf("%s\n\n",out)
 
