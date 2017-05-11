@@ -1,0 +1,11 @@
+[Unit]
+Description=Web server demon
+After=network.target
+
+[Service]
+PIDFile=/run/mhttpd.pid
+ExecStart=/usr/opt/mhttpd
+
+
+[Install]
+WantedBy=multi-user.target
