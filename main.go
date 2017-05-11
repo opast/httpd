@@ -6,6 +6,7 @@ import (
 
 	"github.com/gorilla/sessions"
 	"fmt"
+	"os/exec"
 )
 
 var tpl *template.Template
@@ -43,6 +44,10 @@ func do(w http.ResponseWriter, req *http.Request) {
 		ipaddress := req.FormValue("ipaddress")
 
 		fmt.Println(hostname, ipaddress)
+
+		out, _ := exec.Command("ls", "-l").Output()
+
+		fmt.Printf("%s\n\n",out)
 
 
 		http.Redirect(w, req, "/done", http.StatusSeeOther)
