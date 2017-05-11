@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 PIDFile=/run/mhttpd.pid
-ExecStart=/usr/opt/mhttpd
+ExecStart=/opt/mhttpd
 
 
 [Install]
