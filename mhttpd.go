@@ -127,9 +127,9 @@ func main() {
 	userdb.Password = "123456"
 
 	store.Options = &sessions.Options{
-		Domain:   "localhost",
+//		Domain:   "localhost",
 		Path:     "/",
-		MaxAge:   86400 * 30,
+		MaxAge:   30 * 30,
 		Secure:   true,
 		HttpOnly: true,
 	}
