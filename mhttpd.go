@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/sessions"
 	"fmt"
 	"os/exec"
+	"github.com/gorilla/context"
 )
 
 var tpl *template.Template
@@ -136,5 +137,5 @@ func main() {
 	http.HandleFunc("/logout", logout)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 
-	http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", nil)
+	http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", context.ClearHandler(http.DefaultServeMux))
 }
