@@ -14,8 +14,6 @@ Restart=on-failure
 
 ExecStart=/opt/mhttpd/mhttpd
 
-StandardOutput=/var/log/mhttpd/out.log
-StandardError=/var/log/mhttpd/error.log
 
 
 [Install]
