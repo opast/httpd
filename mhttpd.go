@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/sessions"
 	"os/exec"
 	"io"
+	"log"
 )
 
 type user struct {
@@ -23,6 +24,7 @@ var (
 )
 
 func index(w http.ResponseWriter, req *http.Request) {
+	logFunc("Host" + req.RemoteAddr + "visited /")
 
 	tpl.ExecuteTemplate(w, "index.html", nil)
 }
@@ -144,13 +146,6 @@ func main() {
 	http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", context.ClearHandler(http.DefaultServeMux))
 }
 
-func CToGoString(c []byte) string {
-	n := -1
-	for i, b := range c {
-		if b == 0 {
-			break
-		}
-		n = i
-	}
-	return string(c[:n+1])
+func logFunc(l string) {
+	log.Println(l)
 }
