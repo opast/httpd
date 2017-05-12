@@ -24,12 +24,13 @@ var (
 )
 
 func index(w http.ResponseWriter, req *http.Request) {
-	logFunc("Host" + req.RemoteAddr + "visited /")
+	logFunc("Host " + req.RemoteAddr + " visited /")
 
 	tpl.ExecuteTemplate(w, "index.html", nil)
 }
 
 func do(w http.ResponseWriter, req *http.Request) {
+	logFunc("Host " + req.RemoteAddr + " visited /do")
 
 	if !alreadyLoggedIn(w, req) {
 		http.Redirect(w, req, "/login", http.StatusSeeOther)
@@ -58,6 +59,8 @@ func do(w http.ResponseWriter, req *http.Request) {
 }
 
 func done(w http.ResponseWriter, req *http.Request) {
+	logFunc("Host " + req.RemoteAddr + " visited /done")
+
 	if !alreadyLoggedIn(w, req) {
 		http.Redirect(w, req, "/login", http.StatusSeeOther)
 		return
@@ -67,6 +70,8 @@ func done(w http.ResponseWriter, req *http.Request) {
 }
 
 func login(w http.ResponseWriter, req *http.Request) {
+	logFunc("Host " + req.RemoteAddr + " visited /login")
+
 	session, err := store.Get(req, "session")
 	if err != nil {
 		http.Redirect(w, req, "/", http.StatusSeeOther)
@@ -96,6 +101,7 @@ func login(w http.ResponseWriter, req *http.Request) {
 }
 
 func logout(w http.ResponseWriter, req *http.Request) {
+	logFunc("Host " + req.RemoteAddr + " visited /logout")
 	session, _ := store.Get(req, "session")
 
 	// Revoke users authentication
