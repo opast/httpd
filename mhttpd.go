@@ -129,7 +129,7 @@ func main() {
 	store.Options = &sessions.Options{
 //		Domain:   "localhost",
 		Path:     "/",
-		MaxAge:   30 * 30,
+		MaxAge:   10 * 30,
 		Secure:   true,
 		HttpOnly: true,
 	}
