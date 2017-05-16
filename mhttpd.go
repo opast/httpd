@@ -33,7 +33,7 @@ func do(w http.ResponseWriter, req *http.Request) {
 	logFunc("Host " + req.RemoteAddr + " visited /do")
 
 	if !alreadyLoggedIn(w, req) {
-		http.Redirect(w, req, "/login", http.StatusSeeOther)
+//		http.Redirect(w, req, "/login", http.StatusSeeOther)
 		return
 	}
 
@@ -62,7 +62,7 @@ func done(w http.ResponseWriter, req *http.Request) {
 	logFunc("Host " + req.RemoteAddr + " visited /done")
 
 	if !alreadyLoggedIn(w, req) {
-		http.Redirect(w, req, "/login", http.StatusSeeOther)
+//		http.Redirect(w, req, "/login", http.StatusSeeOther)
 		return
 	}
 
