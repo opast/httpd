@@ -26,14 +26,18 @@ var (
 func index(w http.ResponseWriter, req *http.Request) {
 	logFunc("Host " + req.RemoteAddr + " visited /")
 
-	tpl.ExecuteTemplate(w, "index.html", nil)
+	if alreadyLoggedIn(w, req) {
+		http.Redirect(w, req, "/do", http.StatusSeeOther)
+	}
+
+	tpl.ExecuteTemplate(w, "index.html", false)
 }
 
 func do(w http.ResponseWriter, req *http.Request) {
 	logFunc("Host " + req.RemoteAddr + " visited /do")
 
 	if !alreadyLoggedIn(w, req) {
-//		http.Redirect(w, req, "/login", http.StatusSeeOther)
+		http.Redirect(w, req, "/login", http.StatusSeeOther)
 		return
 	}
 
@@ -49,24 +53,11 @@ func do(w http.ResponseWriter, req *http.Request) {
 		out, _ := exec.Command("ls", arg).Output()
 
 		io.WriteString(w, fmt.Sprintf("%s", out))
-//		print(str)
-//		http.Redirect(w, req, "/done", http.StatusSeeOther)
 
 		return
 	}
 
 	tpl.ExecuteTemplate(w, "do.html", nil)
-}
-
-func done(w http.ResponseWriter, req *http.Request) {
-	logFunc("Host " + req.RemoteAddr + " visited /done")
-
-	if !alreadyLoggedIn(w, req) {
-//		http.Redirect(w, req, "/login", http.StatusSeeOther)
-		return
-	}
-
-	tpl.ExecuteTemplate(w, "done.html", nil)
 }
 
 func login(w http.ResponseWriter, req *http.Request) {
@@ -114,17 +105,15 @@ func logout(w http.ResponseWriter, req *http.Request) {
 func alreadyLoggedIn(w http.ResponseWriter, req *http.Request) bool {
 	session, err := store.Get(req, "session")
 	if err != nil {
-		http.Redirect(w, req, "/", http.StatusSeeOther)
 		return false
 	}
 
 	username, found := session.Values["username"]
-	if !found || username == "" {
-		http.Redirect(w, req, "/login", http.StatusSeeOther)
-		return false
+	if found && username == userdb.Login {
+		return true
 	}
 
-	return true
+	return false
 }
 
 func main() {
@@ -144,7 +133,6 @@ func main() {
 
 	http.HandleFunc("/", index)
 	http.HandleFunc("/do", do)
-	http.HandleFunc("/done", done)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/logout", logout)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
